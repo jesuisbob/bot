@@ -80,6 +80,7 @@ def do_command(s, line, connected, channel, win):
     #[':Snorky!Silentd@snorky', 'JOIN', ':#bot']
     regex = ur"^:\x01.+\x01$"
     victim = line[0].split("!")[0][1:] 
+    data = line[0].split("!")[0][1:] + "\t| " + ' '.join(line[3:])[1:]
     
     try:
         if (connected == 0):
@@ -90,19 +91,16 @@ def do_command(s, line, connected, channel, win):
             welcome(s, channel, victim)
         #CTCP VERSION
         elif (re.findall(regex, line[3])):
-            pass
-            #    cctp(s, line)
+            cctp(s, line)
         #Menu
         elif (line[3]==":!menu"):
             menu(s, channel)
         #Chanserv Notification
         elif(victim == "ChanServ"):
             pass
-            #print line
+            #display(win, data)
         else:
-            data = line[0].split("!")[0][1:] + "\t| " + ' '.join(line[3:])[1:]
             display(win,data)
-            #print line[0].split("!")[0][1:], "\t| ", ' '.join(line[3:])[1:]
     except:
         win.addstr(0,0,"Fail!")
     
